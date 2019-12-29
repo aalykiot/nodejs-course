@@ -3,3 +3,9 @@
   background: transparent !important;
   box-shadow: none !important;
 }
+
+.ul-1 li {
+  font-size: 30px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
