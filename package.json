@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-course",
+  "version": "1.0.0",
+  "description": "Getting started with node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "reveal-md ./README.md --port 8888 --theme solarized --css styles.css",
+    "watch": "npm start -- -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexalikiotis/nodejs-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexalikiotis/nodejs-course/issues"
+  },
+  "homepage": "https://github.com/alexalikiotis/nodejs-course#readme",
+  "dependencies": {
+    "reveal-md": "^3.4.2"
+  }
+}
