@@ -6,7 +6,7 @@ title: Intro and Overview of Node.JS
 
 ### Intro and Overview of
 
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/590px-Node.js_logo.svg.png" class="img-reset" style="width: 400px">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/590px-Node.js_logo.svg.png" class="img-reset" style="width: 400px">
 
 ---
 
@@ -20,7 +20,7 @@ Node.js® is a JavaScript runtime built on Chrome's <strong>V8 JavaScript engine
 
 V8 is Google’s open source high-performance JavaScript and WebAssembly engine, written in C++. It is used in Chrome and in Node.js, among others.
 
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/V8_JavaScript_engine_logo_2.svg/1200px-V8_JavaScript_engine_logo_2.svg.png" class="img-reset" style="width: 300px;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/V8_JavaScript_engine_logo_2.svg/1200px-V8_JavaScript_engine_logo_2.svg.png" class="img-reset" style="width: 300px;">
 
 ---
 
@@ -28,13 +28,13 @@ V8 is Google’s open source high-performance JavaScript and WebAssembly engine,
 
 Node.js uses a single threaded model with event looping that's why enforces an asynchronous programming style.
 
-<img data-src="https://miro.medium.com/max/2932/0*X7Z0k20cwHHi8UOI.png" class="img-reset" style="width: 600px" />
+<img src="https://miro.medium.com/max/2932/0*X7Z0k20cwHHi8UOI.png" class="img-reset" style="width: 600px" />
 
 ---
 
 ### Blocking vs Non-Blocking
 
-<img data-src="https://miro.medium.com/max/2494/1*7yyXXq1Z5UP4-ePuxOMZ6Q.png" />
+<img src="https://miro.medium.com/max/2494/1*7yyXXq1Z5UP4-ePuxOMZ6Q.png" />
 
 ---
 
@@ -226,7 +226,7 @@ myEmitter.emit('greeting', 'Bob');
 
 In an event-driven application, there is generally a main loop that listens for events, and then triggers a callback function when one of those events is detected.
 
-<img data-src="https://github.com/LearnTeachCodeSeoul/nodejs-course/raw/master/lesson4/event_loop.jpg" />
+<img src="https://github.com/LearnTeachCodeSeoul/nodejs-course/raw/master/lesson4/event_loop.jpg" />
 
 ---
 
@@ -391,7 +391,7 @@ server.listen(8080);
 
 ### Apache vs Nginx Performance
 
-<img data-src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-reqs-sec.png" />
+<img src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-reqs-sec.png" />
 <br />
 Hmmm... 🤔
 
@@ -399,7 +399,7 @@ Hmmm... 🤔
 
 ### Apache vs Nginx Memory Usage
 
-<img data-src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-memory.png" />
+<img src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-memory.png" />
 <br />
 
 <p>What ??? 😬</p>
@@ -416,9 +416,8 @@ const http = require('http');
 const server = http.createServer();
 
 server.on('request', (req, res) => {
-
-  res.end('Hello, LTCS!');
-
+  res.write('Hello, LTCS!');
+  res.end();
 });
 
 server.listen(3000);
