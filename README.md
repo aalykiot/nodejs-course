@@ -640,7 +640,10 @@ $ npm help
 
 ### Installing NPM packages
 
-Install a package into your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm install <package>`</span>:
+<br />
+
+Install a package into your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm install <package>`</span>
+<br /><br />
 
 ```sh
 $ npm install lodash
@@ -651,7 +654,10 @@ lodash
 
 ### Uninstalling NPM packages
 
-Remove a package from your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm uninstall <package>`</span>:
+<br />
+
+Remove a package from your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm install <package>`</span>
+<br /><br />
 
 ```sh
 $ npm uninstall lodash
