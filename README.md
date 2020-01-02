@@ -40,7 +40,7 @@ Node.js uses a single threaded model with event looping that's why enforces an a
 
 Not Good 🚫
 
-```
+```js
 // Blocking
 const fs = require('fs');
 
@@ -54,7 +54,7 @@ moreWork(); // will run after console.log
 
 Excellent ✅
 
-```
+```js
 // Non-blocking
 const fs = require('fs');
 
@@ -105,12 +105,12 @@ const fs = require('fs');
 ### Reading A File With Node.JS
 
 Syntax
-```
+```js
 fs.readFile(file, callback)
 ```
 
 Example
-```
+```js
 fs.readFile('example.txt', (err, data) => {
   if (err) {
     console.log(err);
@@ -125,12 +125,12 @@ fs.readFile('example.txt', (err, data) => {
 ### Writing A File With Node.JS
 
 Syntax
-```
+```js
 fs.writeFile(file, data, callback)
 ```
 
 Example
-```
+```js
 fs.writeFile(
   'example.txt',
   'Learn Teach Code Seoul',
@@ -163,7 +163,7 @@ fs.writeFile(
 The browser triggers events and we can listen for them.
 <br /><br />
 
-```
+```html
 <button id="myBtn">Click me!</button>
 <script>
   document
@@ -186,7 +186,7 @@ The browser triggers events and we can listen for them.
 Node.js has a built-in module, called "Events", where you can create-, fire-, and listen for- your own events.
 <br /><br />
 
-```
+```js
 const EventEmitter = require('events');
 
 const myEmitter = new EventEmitter();
@@ -303,7 +303,7 @@ Readable streams are an abstraction for a source from which data is consumed. Re
 
 ### Example
 
-```
+```js
 const fs = require('fs');
 
 const file = fs.createReadStream("example.txt");
@@ -347,7 +347,7 @@ Writable streams are an abstraction for a destination to which data is written. 
 
 ### Example
 
-```
+```js
 const fs = require('fs');
 
 const file = fs.createWriteStream('example.txt');
@@ -371,7 +371,7 @@ file.end();
 
 ### Example
 
-```
+```js
 const http = require('http');
 
 const server = http.createServer();
@@ -410,7 +410,7 @@ Hmmm... 🤔
 
 Here's an example of an HTTP server that simply responds to any request with "Hello, LTCS!".
 
-```
+```js
 const http = require('http');
 
 const server = http.createServer();
@@ -429,7 +429,7 @@ server.listen(3000);
 
 <p>When Node.js HTTP parser reads in and parses request data, it makes that data available in the form of data events that contains chunks of parsed data ready to be handled by the callback funtion.</p>
 
-```
+```js
 req.on('data', function(data) {
   console.log(data);
 });
@@ -441,7 +441,7 @@ req.on('data', function(data) {
 
 First, call the res.write() method, which writes response data, and then use the res.end() method to end the response.
 
-```
+```js
 res.write('Hello, LTCS!\n');
 res.write('Bye, LTCS!');
 res.end();
@@ -449,7 +449,7 @@ res.end();
 
 <p>As shorthand, res.write() and res.end() can be conbined into one statement, which can be nice for small responses.</p>
 
-```
+```js
 res.end('Hello, LTCS!\nBye, LTCS!');
 ```
 
@@ -461,7 +461,7 @@ res.end('Hello, LTCS!\nBye, LTCS!');
 You should add headers in any order, but only up to the first res.write() or res.end(). After the first part of the response body is written, HTTP headers that thave been set will be flushed.
 </p>
 
-```
+```js
 // plain text
 res.setHeader('Content-Type', 'text/plain');
 
@@ -479,7 +479,7 @@ Set res.statusCode property. This property also should be assigned before the fi
 
 <br />
 
-```
+```js
 res.statusCode = 404; // Not Found
 ```
 
@@ -510,10 +510,10 @@ res.statusCode = 404; // Not Found
 
 ---
 
-### Requring Modules
+### Requiring Modules
 
 
-```
+```js
 // look in the same directory
 const some_module = require('./some_module');
 
@@ -525,7 +525,6 @@ const some_module = require('/Users/dale/some_module');
 
 // look in the node_modules directory
 const some_module = require('some_module');
-
 ```
 
 ---
@@ -534,7 +533,7 @@ const some_module = require('some_module');
 
 <p>Let’s look at how to create our own module and export it for use elsewhere in our program. Start off by creating a <strong>user.js</strong> file and adding the following:</p>
 
-```
+```js
 function getName() {
   return 'Jim';
 }
@@ -548,7 +547,7 @@ module.exports.getName = getName;
 
 <p>Now create an <strong>index.js</strong> file in the same folder and add this:</p>
 
-```
+```js
 const user = require('./user');
 
 console.log(`User: ${user.getName()}`);
@@ -556,7 +555,7 @@ console.log(`User: ${user.getName()}`);
 <br />
 <p>Run the program using node index.js and you should see the following output to the terminal:</p>
 
-```
+```sh
 User: Jim
 ```
 
@@ -566,7 +565,7 @@ User: Jim
 
 <p>We can export multiple methods and values in the same way:</p>
 
-```
+```js
 const getName = () => {
   return 'Jim';
 };
@@ -580,7 +579,6 @@ const dateOfBirth = '12.01.1982';
 module.exports.getName = getName;
 module.exports.getLocation = getLocation;
 module.exports.dob = dateOfBirth;
-
 ```
 
 ---
@@ -589,7 +587,7 @@ module.exports.dob = dateOfBirth;
 
 We should also mention that it’s possible to export methods and values as you go, not just at the end of the file.
 
-```
+```js
 module.exports.getName = () => {
   return 'Jim';
 };
@@ -607,7 +605,7 @@ module.exports.dob = '12.01.1982';
 
 <p style="font-size: 18pt;">In the above example, we’re exporting functions and values individually. This is handy for helper functions that could be needed all over an app, but when you have a module that exports just the one thing, it’s more common to use module.exports:</p>
 
-```
+```js
 class User {
   constructor(name, age, email) {
     this.name = name;
@@ -633,7 +631,7 @@ The Node Package Manager is a utility that comes bundled with Node.js.
 
 It allows you to easily install third-party packages and globally publish any Node.js packages you yourself create.
 
-```
+```sh
 $ npm --version
 $ npm help
 ```
@@ -644,7 +642,7 @@ $ npm help
 
 Install a package into your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm install <package>`</span>:
 
-```
+```sh
 $ npm install lodash
 $ ls node_modules
 lodash
@@ -655,7 +653,7 @@ lodash
 
 Remove a package from your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm uninstall <package>`</span>:
 
-```
+```sh
 $ npm uninstall lodash
 $ ls node_modules
 ```
