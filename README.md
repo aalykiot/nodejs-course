@@ -227,3 +227,274 @@ myEmitter.emit('greeting', 'Bob');
 In an event-driven application, there is generally a main loop that listens for events, and then triggers a callback function when one of those events is detected.
 
 <img data-src="https://github.com/LearnTeachCodeSeoul/nodejs-course/raw/master/lesson4/event_loop.jpg" />
+
+---
+
+### Streams In Node.JS
+
+"Almost all Node.js applications, no matter how simple, use streams in some manner."
+
+---
+
+### What are Streams?
+
+Streams can be readable, writable, or both using buffers (a sort of queue or a byte array) in memory. We can process data while still receiving it. The feature is useful for extra large datasets such as video or database migration.
+
+---
+
+#### Analogy
+
+<ul class="ul-1">
+  <li>Streaming music VS. Downloading MP3 files</li>
+  <li>Watching video clips on YouTube VS. Downloading video files.</li>
+</ul>
+<br /><br />
+
+#### Streams VS. Arrays
+
+<p>You can think of streams as being like arrays, but...</p>
+
+<ul class="ul-1">
+  <li>Arrays: having data distributed over space</li>
+  <li>Streams: having data distributed over time</li>
+</ul>
+
+---
+
+### Types of Node.JS Streams
+
+There are four fundamental stream types
+
+<ul class="ul-1">
+  <li><strong>Readable:</strong> streams from which data can be read</li>
+  <li><strong>Writable:</strong> streams to which data can be written</li>
+  <li><strong>Duplex:</strong> streams that are both Readable and Writable</li>
+  <li><strong>Transform:</strong> Duplex streams that can modify or transform the data as it is written and read</li>
+</ul>
+
+---
+
+### Readable Streams
+
+Readable streams are an abstraction for a source from which data is consumed. Readable streams use the EventEmitter API for notifying application code when data is available to be read off the stream.
+
+---
+
+### Readable Streams Events
+
+<ul class="ul-1">
+  <li>
+    <q>data</q>
+      <ul class="ul-1">
+        <li>emitted when there is data available to be read from the stream.</li>
+        <li>indicates that the stream has new information</li>
+      </ul>
+  </li>
+   <li>
+    <q>end</q>
+      <ul class="ul-1">
+        <li>emitted when there is no more data to be consumed from the stream.</li>
+        <li>The 'end' event will not be emitted unless the data is completely consumed.</li>
+      </ul>
+  </li>
+</ul>
+
+---
+
+### Example
+
+```
+const fs = require('fs');
+
+const file = fs.createReadStream("example.txt");
+
+file.on('data', (chunk) => {
+	console.log(chunk.toString());
+});
+
+file.on('end', () => {
+	console.log('There will be no data.')
+});
+```
+
+---
+
+### Writable Streams
+
+Writable streams are an abstraction for a destination to which data is written. Writable streams expose methods such as write() and end() that are used to write data onto the stream.
+
+---
+
+### Writable Streams Methods
+
+<ul class="ul-1">
+  <li>
+    writable.write(chunk)
+      <ul class="ul-1">
+        <li>writes some data to the writable stream.</li>
+      </ul>
+  </li>
+   <li>
+    writable.end([chunk])
+      <ul class="ul-1">
+        <li>signals that no more data will be written to the writable stream.</li>
+        <li>the optional chunk allow one final additional chunk of data to be written immediately before closing the stream.</li>
+      </ul>
+  </li>
+</ul>
+
+---
+
+### Example
+
+```
+const fs = require('fs');
+
+const file = fs.createWriteStream('example.txt');
+
+file.write('Intro and overview of node.js');
+
+file.end();
+```
+
+---
+
+### Piping Streams
+
+<p style="font-size: 23pt">This provides an efficient way to write out data as soon as it's ready, without waiting for the complete resource to be read and written out.</p>
+
+<p style="font-size: 23pt">The <strong>readable.pipe()</strong> method attaches a Writable stream to the Readable, causing it push all of its data to the attached Writable.</p>
+
+<p style="font-size: 23pt; background: rgba(0,0,0,0.1)">**It's the most recommended way when we use Steram APIs.</p>
+
+---
+
+### Example
+
+```
+const http = require('http');
+
+const server = http.createServer();
+
+server.on('request', (req, res) => {
+	req.pipe(res);
+});
+
+server.listen(8080);
+```
+
+---
+
+### HTTP Module
+
+---
+
+### Apache vs Nginx Performance
+
+<img data-src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-reqs-sec.png" />
+<br />
+Hmmm... 🤔
+
+---
+
+### Apache vs Nginx Memory Usage
+
+<img data-src="https://blog.webfaction.com/wp-content/uploads/2008/12/nginx-apache-memory.png" />
+<br />
+
+<p>What ??? 😬</p>
+
+---
+
+### Building a Simple Server
+
+Here's an example of an HTTP server that simply responds to any request with "Hello, LTCS!".
+
+```
+const http = require('http');
+
+const server = http.createServer();
+
+server.on('request', (req, res) => {
+
+  res.end('Hello, LTCS!');
+
+});
+
+server.listen(3000);
+```
+
+---
+
+### Reading Request Body Data
+
+<p>When Node.js HTTP parser reads in and parses request data, it makes that data available in the form of data events that contains chunks of parsed data ready to be handled by the callback funtion.</p>
+
+```
+req.on('data', function(data) {
+  console.log(data);
+});
+```
+
+---
+
+### Writing Response Body Data
+
+First, call the res.write() method, which writes response data, and then use the res.end() method to end the response.
+
+```
+res.write('Hello, LTCS!\n');
+res.write('Bye, LTCS!');
+res.end();
+```
+
+<p>As shorthand, res.write() and res.end() can be conbined into one statement, which can be nice for small responses.</p>
+
+```
+res.end('Hello, LTCS!\nBye, LTCS!');
+```
+
+---
+
+### Setting Response Headers
+
+<p>
+You should add headers in any order, but only up to the first res.write() or res.end(). After the first part of the response body is written, HTTP headers that thave been set will be flushed.
+</p>
+
+```
+// plain text
+res.setHeader('Content-Type', 'text/plain');
+
+// html document
+res.setHeader('Content-Type', 'text/html');
+```
+
+---
+
+### Setting the Status Code of an HTTP Response
+
+<p>
+Set res.statusCode property. This property also should be assigned before the first call to res.write()or res.end().
+</p>
+
+<br />
+
+```
+res.statusCode = 404; // Not Found
+```
+
+<br />
+
+**The default HTTP status code is 200.
+
+---
+
+### HTTP Status Codes
+
+<ul class="ul-1">
+  <li>2xx Success: 200 OK, 201 Created</li>
+  <li>3xx Redirection: 301 Moved Permanently, 302 Found, 303 See Other</li>
+  <li>4xx Client Error: 400 Bad Request, 401 Unauthorized, 404 Not Found</li>
+  <li>5xx Server Error: 500 Internal Server Error, 503 Service Unavailable</li>
+</ul>
