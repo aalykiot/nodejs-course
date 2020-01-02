@@ -498,3 +498,165 @@ res.statusCode = 404; // Not Found
   <li>4xx Client Error: 400 Bad Request, 401 Unauthorized, 404 Not Found</li>
   <li>5xx Server Error: 500 Internal Server Error, 503 Service Unavailable</li>
 </ul>
+
+---
+
+### Modules And NPM
+
+---
+
+### Modules
+
+<p>Java or Python use the import function to load other libraries, while PHP and Ruby use require. Node.js implements the CommonJS interface for modules. In Node.js you can also load other depencies using the require keyword.</p>
+
+---
+
+### Requring Modules
+
+
+```
+// look in the same directory
+const some_module = require('./some_module');
+
+// look in the parent directory
+const some_module = require('../some_module');
+
+// look in the root directory
+const some_module = require('/Users/dale/some_module');
+
+// look in the node_modules directory
+const some_module = require('some_module');
+
+```
+
+---
+
+### Creating and Exporting a Module
+
+<p>Let’s look at how to create our own module and export it for use elsewhere in our program. Start off by creating a <strong>user.js</strong> file and adding the following:</p>
+
+```
+function getName() {
+  return 'Jim';
+}
+
+module.exports.getName = getName;
+```
+
+---
+
+### Creating and Exporting a Module
+
+<p>Now create an <strong>index.js</strong> file in the same folder and add this:</p>
+
+```
+const user = require('./user');
+
+console.log(`User: ${user.getName()}`);
+```
+<br />
+<p>Run the program using node index.js and you should see the following output to the terminal:</p>
+
+```
+User: Jim
+```
+
+---
+
+### Exporting Multiple Methods and Values
+
+<p>We can export multiple methods and values in the same way:</p>
+
+```
+const getName = () => {
+  return 'Jim';
+};
+
+const getLocation = () => {
+  return 'Munich';
+};
+
+const dateOfBirth = '12.01.1982';
+
+module.exports.getName = getName;
+module.exports.getLocation = getLocation;
+module.exports.dob = dateOfBirth;
+
+```
+
+---
+
+### Export As You Go
+
+We should also mention that it’s possible to export methods and values as you go, not just at the end of the file.
+
+```
+module.exports.getName = () => {
+  return 'Jim';
+};
+
+module.exports.getLocation = () => {
+  return 'Munich';
+};
+
+module.exports.dob = '12.01.1982';
+```
+
+---
+
+### Exporting a Default Value
+
+<p style="font-size: 18pt;">In the above example, we’re exporting functions and values individually. This is handy for helper functions that could be needed all over an app, but when you have a module that exports just the one thing, it’s more common to use module.exports:</p>
+
+```
+class User {
+  constructor(name, age, email) {
+    this.name = name;
+    this.age = age;
+  }
+
+  getUserStats() {
+    return `
+      Name: ${this.name}
+      Age: ${this.age}
+    `;
+  }
+}
+
+module.exports = User;
+```
+
+---
+
+### NPM (Node Package Manager)
+
+The Node Package Manager is a utility that comes bundled with Node.js.
+
+It allows you to easily install third-party packages and globally publish any Node.js packages you yourself create.
+
+```
+$ npm --version
+$ npm help
+```
+
+---
+
+### Installing NPM packages
+
+Install a package into your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm install <package>`</span>:
+
+```
+$ npm install lodash
+$ ls node_modules
+lodash
+```
+---
+
+### Uninstalling NPM packages
+
+Remove a package from your node_modules directory using <span style="background: rgba(0,0,0,0.1);">`npm uninstall <package>`</span>:
+
+```
+$ npm uninstall lodash
+$ ls node_modules
+```
