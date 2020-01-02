@@ -96,7 +96,7 @@ moreWork(); // will run before console.log
 The Node.js File System (fs) module can be imported using the following syntax.
 <br /><br />
 
-```
+```js
 const fs = require('fs');
 ```
 
