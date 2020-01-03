@@ -427,7 +427,7 @@ server.listen(3000);
 
 ### Reading Request Body Data
 
-<p>When Node.js HTTP parser reads in and parses request data, it makes that data available in the form of data events that contains chunks of parsed data ready to be handled by the callback funtion.</p>
+When Node.js HTTP parser reads in and parses request data, it makes that data available in the form of data events that contains chunks of parsed data ready to be handled by the callback funtion.
 
 ```js
 req.on('data', function(data) {
@@ -447,7 +447,7 @@ res.write('Bye, LTCS!');
 res.end();
 ```
 
-<p>As shorthand, res.write() and res.end() can be conbined into one statement, which can be nice for small responses.</p>
+As shorthand, res.write() and res.end() can be conbined into one statement, which can be nice for small responses.
 
 ```js
 res.end('Hello, LTCS!\nBye, LTCS!');
@@ -457,9 +457,7 @@ res.end('Hello, LTCS!\nBye, LTCS!');
 
 ### Setting Response Headers
 
-<p>
 You should add headers in any order, but only up to the first res.write() or res.end(). After the first part of the response body is written, HTTP headers that thave been set will be flushed.
-</p>
 
 ```js
 // plain text
@@ -473,9 +471,7 @@ res.setHeader('Content-Type', 'text/html');
 
 ### Setting the Status Code of an HTTP Response
 
-<p>
 Set res.statusCode property. This property also should be assigned before the first call to res.write()or res.end().
-</p>
 
 <br />
 
@@ -506,7 +502,7 @@ res.statusCode = 404; // Not Found
 
 ### Modules
 
-<p>Java or Python use the import function to load other libraries, while PHP and Ruby use require. Node.js implements the CommonJS interface for modules. In Node.js you can also load other depencies using the require keyword.</p>
+Java or Python use the import function to load other libraries, while PHP and Ruby use require. Node.js implements the CommonJS interface for modules. In Node.js you can also load other depencies using the require keyword.
 
 ---
 
@@ -531,7 +527,7 @@ const some_module = require('some_module');
 
 ### Creating and Exporting a Module
 
-<p>Let’s look at how to create our own module and export it for use elsewhere in our program. Start off by creating a <strong>user.js</strong> file and adding the following:</p>
+Let’s look at how to create our own module and export it for use elsewhere in our program. Start off by creating a <strong>user.js</strong> file and adding the following:
 
 ```js
 function getName() {
@@ -545,7 +541,7 @@ module.exports.getName = getName;
 
 ### Creating and Exporting a Module
 
-<p>Now create an <strong>index.js</strong> file in the same folder and add this:</p>
+Now create an <strong>index.js</strong> file in the same folder and add this:
 
 ```js
 const user = require('./user');
@@ -553,7 +549,7 @@ const user = require('./user');
 console.log(`User: ${user.getName()}`);
 ```
 <br />
-<p>Run the program using node index.js and you should see the following output to the terminal:</p>
+Run the program using node index.js and you should see the following output to the terminal:
 
 ```sh
 User: Jim
@@ -563,7 +559,7 @@ User: Jim
 
 ### Exporting Multiple Methods and Values
 
-<p>We can export multiple methods and values in the same way:</p>
+We can export multiple methods and values in the same way:
 
 ```js
 const getName = () => {
