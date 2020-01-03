@@ -12,6 +12,10 @@ title: Intro and Overview of Node.JS
 
 ### What is node.js ?
 
+<img src="https://miro.medium.com/max/2720/1*o7iVDc2YQT9yBuuYM08E1w.png" class="img-reset" style="width: 700px;" />
+
+---
+
 Node.js® is a JavaScript runtime built on Chrome's <strong>V8 JavaScript engine</strong>. Node.js uses an <strong>event-driven, non-blocking I/O model</strong> that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world - nodejs.org
 
 ---
@@ -659,3 +663,103 @@ Remove a package from your node_modules directory using <span style="background:
 $ npm uninstall lodash
 $ ls node_modules
 ```
+
+---
+
+### Node.js Under The Hood
+
+---
+
+### Node.js is Single Threaded
+
+<img src="https://github.com/davidedantonio/nodejs-course-slides/raw/master/part1/images/node_thread.png" width="300" class="img-reset" />
+
+*Except when it's not
+
+---
+
+### The Truth
+
+<br/>
+All Javascript, V8, and the event loop run in one thread, called the <strong>main thread</strong>.
+
+---
+
+Node.js has also some C++ bindings implemented
+
+<img src="https://miro.medium.com/max/800/0*DLjTUbiHLIUv47ha.jpg" width="600" />
+
+C++ backed <i>synchronous</i> methods run in the main thread too.
+
+---
+
+But C++ has access to multiple threads 😉
+
+<img src="https://images.ctfassets.net/hspc7zpa5cvq/20h5efXHT4bQbuf44mdq2H/a40944191d031217a9169b17a8ef35d6/worker-diagram_2x__1_.jpg" width="500" />
+
+C++ backed <strong><i>asynchronous</i></strong> methods sometimes don't run in the main thread.
+
+---
+
+### Let's look at an example
+
+Crypto Module
+
+<br/>
+
+*All measurements taken on a dual-core Intel Core i5
+
+---
+
+### Synchronous Crypto Code
+
+```js
+const crypto = require('crypto');
+
+const NUM_REQUESTS = 2;
+
+for (let i = 0; i < NUM_REQUESTS; i++) {
+  crypto.pbkdf2Sync('secret', 'salt', 10000, 512, 'sha512');
+}
+```
+
+---
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-14-638.jpg?cb=1559124543" />
+
+---
+
+### Asynchronous Crypto Code
+
+```js
+const crypto = require('crypto');
+
+const NUM_REQUESTS = 2;
+
+for (let i = 0; i < NUM_REQUESTS; i++) {
+  crypto.pbkdf2('secret', 'salt', 10000, 512, 'sha512', () => {});
+}
+```
+
+---
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-16-638.jpg?cb=1559124543" />
+
+---
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-17-638.jpg?cb=1559124543" />
+
+---
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-18-638.jpg?cb=1559124543" />
+
+---
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-19-638.jpg?cb=1559124543" />
+
+---
+
+Node.js uses a pre-allocated set of threads called the <strong>Thread Pool</strong>. The default is 4.
+
+<br/>
+<img src="https://blog.outsource.com/wp-content/uploads/2018/09/Event_Loop_in_Node.js.png" class="img-reset" />
