@@ -670,6 +670,70 @@ $ ls node_modules
 
 ---
 
+### The Event Loop
+
+The event loop is what allows Node.js to perform non-blocking I/O operations — despite the fact that JavaScript is single-threaded — by offloading operations to the system kernel whenever possible.
+
+---
+
+### Phases Of The Event Loop
+
+<img src="https://github.com/davidedantonio/nodejs-course-slides/raw/master/part1/images/event_loop1.png" width="700" class="img-reset" />
+
+---
+
+<ul class="ul-1">
+  <li>
+    <strong>Timers</strong>
+    <ul class="ul-1">
+      <li>Everything that was scheduled via setTimeout() or setInterval() will be processed here.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>IO Callbacks</strong>
+    <ul class="ul-1">
+      <li>Here most of the callbacks will be processed. As all userland code in Node.js is basically in callbacks (e.g a callback to an incoming http request triggers a cascade of callbacks), this is the userland code.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>IO Polling</strong>
+    <ul class="ul-1">
+      <li>Polls for new events to be processed on the next run.</li>
+    </ul>
+  </li>
+</ul>
+
+---
+
+<ul class="ul-1">
+  <li>
+    <strong>Set Immediate</strong>
+    <ul class="ul-1">
+      <li>Runs all callbacks registered via setImmediate().</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Close</strong>
+    <ul class="ul-1">
+      <li>Here all on(‘close’) event callbacks are processed.</li>
+    </ul>
+  </li>
+</ul>
+
+---
+
+### The Event Loop Cycle
+
+<img src="https://miro.medium.com/max/2454/1*ROxiavz7LeRpIfcgRDE7CA.png" />
+
+---
+
+### When The Event Loop Exists ?
+
+<img src="https://github.com/davidedantonio/nodejs-course-slides/raw/master/part1/images/loop_4.png" />
+
+---
+
 ### Node.js is Single Threaded
 
 <img src="https://github.com/davidedantonio/nodejs-course-slides/raw/master/part1/images/node_thread.png" width="300" class="img-reset" />
