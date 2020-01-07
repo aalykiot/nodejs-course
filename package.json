@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "reveal-md ./README.md --port 8888 --theme solarized --css styles.css",
+    "export": "reveal-md ./README.md --static --theme solarized --css styles.css",
     "watch": "npm start -- -w"
   },
   "repository": {
