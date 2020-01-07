@@ -827,3 +827,74 @@ Node.js uses a pre-allocated set of threads called the <strong>Thread Pool</stro
 
 <br/>
 <img src="https://blog.outsource.com/wp-content/uploads/2018/09/Event_Loop_in_Node.js.png" class="img-reset" />
+
+---
+
+### Let's look at another example
+
+HTTP(S) Module
+
+---
+
+### HTTPS, 2 Requests
+
+```js
+const https = require('https');
+
+const NUM_REQUESTS = 2;
+
+for (let i = 0; i < NUM_REQUESTS; ++i) {
+  https.request('https://nebri.us/static/me.jpg', (res) => {
+    res.on('data', () => {});
+    res.on('end', () => {});
+  }).end();
+}
+```
+
+---
+
+### HTTPS Results
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-23-638.jpg?cb=1559124543" />
+
+---
+
+### HTTPS Results
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-24-638.jpg?cb=1559124543" />
+
+---
+
+### HTTPS Results
+
+<img src="https://image.slidesharecdn.com/node-190529100719/95/the-nodejs-event-loop-not-so-single-threaded-25-638.jpg?cb=1559124543" />
+
+---
+
+C++ backed methods use C++ asynchronous primitives whenever possible
+
+<span style="font-size: 16pt;">epoll (Linux), kqueue (macOS), GetQueuedCompletionStatusEx (Windows)</span>
+
+---
+
+### Back To The Event Loop - Puork Function
+
+<img src="https://raw.githubusercontent.com/davidedantonio/nodejs-course-slides/master/part1/images/puork_f.png" width="600" />
+
+---
+
+### The Non-Blocking I/O Engine of Node.js
+
+The Node.js core team created a C library called <strong>libuv</strong>, with the objective to make Node.js compatible with all the major platforms and normalize the non-blocking behavior of the different types of resource.
+
+<img src="https://raw.githubusercontent.com/davidedantonio/nodejs-course-slides/master/part1/images/libuv.png" width="300" class="img-reset" />
+
+---
+
+### Correct Overview Of Node.js
+
+<img src="https://hackaday.com/wp-content/uploads/2018/08/nojs-system-diagram-by-busyrich.jpg?w=800" />
+
+---
+
+## Demo Time
