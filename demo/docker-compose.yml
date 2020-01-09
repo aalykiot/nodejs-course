@@ -1,0 +1,11 @@
+version: "3"
+services:
+  database:
+    image: "mongo"
+    container_name: "mongo_db"
+    environment:
+      MONGO_INITDB_DATABASE: books-rest-api-demo
+    volumes:
+      - ./db_data:/data/db
+    ports:
+      - "27017:27017"

@@ -1,0 +1,32 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "nodemon ./bin/www --ignore 'db_data'",
+    "lint": "eslint .",
+    "clean": "rm -rf node_modules/",
+    "compose": "docker-compose up -d",
+    "compose:logs": "docker-compose logs --tail=0 -f database",
+    "compose:stop": "docker-compose stop"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1"
+  },
+  "dependencies": {
+    "@hapi/boom": "^9.0.0",
+    "body-parser": "^1.19.0",
+    "chalk": "^3.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.6",
+    "morgan": "^1.9.1",
+    "yup": "^0.28.0"
+  }
+}
