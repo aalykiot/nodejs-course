@@ -20,4 +20,11 @@ const bookSchema = new mongoose.Schema({
   },
 });
 
+bookSchema.set('toJSON', {
+  transform: (_, { _id, __v, ...restObject }) => ({
+    id: _id,
+    ...restObject,
+  }),
+});
+
 mongoose.model('Book', bookSchema);

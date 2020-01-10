@@ -7,11 +7,21 @@ module.exports = {
     const books = await Book.find({});
     return books;
   },
-
+  getById: async id => {
+    const book = await Book.findById(id);
+    return book;
+  },
   create: async data => {
     const newBook = new Book(data);
-
     await newBook.save();
     return newBook;
+  },
+  update: async (id, data) => {
+    const updatedBook = Book.findByIdAndUpdate(id, data, { new: true });
+    return updatedBook;
+  },
+  remove: async id => {
+    const removedBook = Book.findByIdAndRemove(id);
+    return removedBook;
   },
 };
