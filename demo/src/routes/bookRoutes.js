@@ -1,75 +1,82 @@
 const express = require('express');
 const yup = require('yup');
-const boom = require('@hapi/boom');
 
 // Local imports
 const bookService = require('../services/bookService');
-
-// Build server response when internal error happens
-function createServerError() {
-  return boom.badImplementation().output;
-}
-
-// Book validation schema
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  subtitle: yup.string(),
-  description: yup.string().required(),
-  authors: yup
-    .array()
-    .of(yup.string())
-    .required(),
-  isbn: yup.string().required(),
-});
+const bookSchema = require('../validation/bookValidation');
+const response = require('../helpers/response');
+const CustomError = require('../helpers/error');
 
 const router = express.Router();
 
-router.get('/', (_, res) => {
-  bookService.get().then(books => res.json(books));
+router.get('/v1/books', async (_, res, next) => {
+  bookService
+    .get()
+    .then(bookList => res.send(response(bookList)))
+    .catch(err => next(err));
 });
 
-router.get('/:id', (req, res) => {
+router.get('/v1/books/:id', async (req, res, next) => {
   const { id } = req.params;
-  bookService.getById(id).then(book => res.json(book));
+
+  bookService
+    .getById(id)
+    .then(book => {
+      if (!book) {
+        throw new CustomError(404, 'Requested book not found');
+      }
+      res.send(response(book));
+    })
+    .catch(err => next(err));
 });
 
-router.post('/', (req, res, next) => {
-  //
+router.post('/v1/books', (req, res, next) => {
   const submittedBook = req.body;
 
-  schema
+  bookSchema
     .validate(submittedBook)
     .then(() => bookService.create(submittedBook))
-    .then(newBook => res.json(newBook))
+    .then(newBook => res.send(response(newBook)))
     .catch(err => {
       if (err instanceof yup.ValidationError) {
-        next(boom.badRequest().output);
-        return;
+        next(new CustomError(422, 'Submitted book data is incorrect'));
       }
-      next(createServerError());
+      next(err);
     });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/v1/books/:id', (req, res, next) => {
   const { id } = req.params;
   const submittedBookUpdates = req.body;
 
-  schema
+  bookSchema
     .validate(submittedBookUpdates)
     .then(() => bookService.update(id, submittedBookUpdates))
-    .then(updatedBook => res.json(updatedBook))
+    .then(updatedBook => {
+      if (!updatedBook) {
+        throw new CustomError(404, 'Requested book for update not found');
+      }
+      res.send(response(updatedBook));
+    })
     .catch(err => {
       if (err instanceof yup.ValidationError) {
-        next(boom.badRequest().output);
-        return;
+        next(new CustomError(422, 'Submitted book data is incorrect'));
       }
-      next(createServerError());
+      next(err);
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/v1/books/:id', (req, res, next) => {
   const { id } = req.params;
-  bookService.remove(id).then(removedBook => res.json(removedBook));
+  bookService
+    .remove(id)
+    .then(removedBook => {
+      if (!removedBook) {
+        throw new CustomError(404, 'Requested book for deletion not found');
+      }
+      res.send(response(removedBook));
+    })
+    .catch(err => next(err));
 });
 
 module.exports = router;
