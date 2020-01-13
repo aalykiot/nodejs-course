@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const dotenv = require('dotenv');
+
+// Load .env variables
+dotenv.config();
 
 // Local imports
 const CustomError = require('./helpers/error');

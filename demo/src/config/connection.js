@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const logger = require('../util/logger');
 
 // Constants
-const FALLBACK = 'mongodb://localhost:27017/books-rest-api-demo';
-const URI = process.env.MONGO_URI || FALLBACK;
+const URI = process.env.MONGO_URI;
 
 mongoose.connect(URI, {
   useNewUrlParser: true,
