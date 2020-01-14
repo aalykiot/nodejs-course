@@ -17,11 +17,11 @@ module.exports = {
     return newBook;
   },
   update: async (id, data) => {
-    const updatedBook = Book.findByIdAndUpdate(id, data, { new: true });
+    const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true });
     return updatedBook;
   },
   remove: async id => {
-    const removedBook = Book.findByIdAndRemove(id);
+    const removedBook = await Book.findByIdAndRemove(id);
     return removedBook;
   },
 };

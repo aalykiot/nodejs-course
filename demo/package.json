@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www --ignore 'db_data'",
+    "start": "node index.js",
+    "dev": "nodemon index.js --ignore 'db_data'",
     "lint": "eslint .",
     "clean": "rm -rf node_modules/",
     "compose": "docker-compose up -d",
