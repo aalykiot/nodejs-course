@@ -1,7 +1,7 @@
 ---
 title: Intro and Overview of Node.JS
-# revealOptions:
-#     transition: 'zoom'
+revealOptions:
+    transition: 'slide'
 ---
 
 ### Intro and Overview of
