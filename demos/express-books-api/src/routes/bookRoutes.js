@@ -9,14 +9,14 @@ const CustomError = require('../helpers/error');
 
 const router = express.Router();
 
-router.get('/v1/books', async (_, res, next) => {
+router.get('/v1/books', (_, res, next) => {
   bookService
     .get()
     .then(bookList => res.send(response(bookList)))
     .catch(err => next(err));
 });
 
-router.get('/v1/books/:id', async (req, res, next) => {
+router.get('/v1/books/:id', (req, res, next) => {
   const { id } = req.params;
 
   bookService
