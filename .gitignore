@@ -105,3 +105,6 @@ dist
 
 # MacOS X
 .DS_Store
+
+# Database storage folder
+db_data
