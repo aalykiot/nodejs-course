@@ -7,47 +7,54 @@
   <title>Socket.io</title>
 </head>
 <body>
-  <ul id="messages"></ul>
-  <form id="message-form" type="POST">
-    <input type="text" id="message" />
-    <input type="submit" value="send" />
-  </form>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <div id="app">
+    <ul>
+      <li v-for="(message, index) in messages" :key="index">
+        <span v-if="message.own" style="color: green">{{message.text}} - sent - {{message.date}}</span>
+        <span v-else style="color: red">{{message.text}} - received - {{message.date}}</span>
+      </li>
+    </ul>
+    <form @submit.prevent="sendMessage">
+      <input type="text" v-model="input" />
+      <input type="submit" value="send" />
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
   <script>
-    $(document).ready(function() {
+    // connect to server
+    const socket = io(window.location.href);
 
-      // connect to server
-      const socket = io(window.location.href);
-
-      // when a message is emitted from the server display in the chat window
-      socket.on('server:message', function(data) {
-        $('#messages').append(
-          '<li style="color: red">' +
-          data.message + ' - ' + 'received' + ' ' + new Date() +
-          '</li>'
-        );
-      });     
-      
-      // handle form's "submit" event
-      $('#message-form').on('submit', function(event) {
-
-        event.preventDefault();
-
-        const message = $('#message').val();
-
-        // send message from client
-        if (message) {
-          socket.emit('client:message', { message: message });
+    new Vue({
+      el: '#app',
+      data:{
+        input: '',
+        messages: []
+      },
+      created() {
+        // when a message is emitted add it to messages
+        socket.on('server:message', (data) => {
+          this.messages.push({
+            text: data.message,
+            date: new Date()
+          });
+        });
+      },
+      methods: {
+        // handle form's "submit" event
+        sendMessage: function() {
+          if (this.input) {
+            // send message from client
+            socket.emit('client:message', { message: this.input });
+            // add message to messages
+            this.messages.push({
+              text: this.input,
+              date: new Date(),
+              own: true
+            });
+          }
         }
-
-        // display message in the UI
-        $('#messages').append(
-          '<li style="color: green">' +
-          message + ' - ' + 'sent' + ' ' + new Date() +
-          '</li>'
-        );
-      });
+      }
     });
   </script>
 </body>
