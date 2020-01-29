@@ -6,7 +6,7 @@ const server = net.createServer((socket) => {
   // push socket to the array
   sockets.push(socket);
 
-  // socket send some data 
+  // socket sent some data 
   socket.on('data', (data) => {
     for(let i = 0; i < sockets.length; i++) {
       if (sockets[i] === socket) continue;

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Socket.io</title>
+</head>
+<body>
+  <ul id="messages"></ul>
+  <form id="message-form" type="POST">
+    <input type="text" id="message" />
+    <input type="submit" value="send" />
+  </form>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script>
+    $(document).ready(function() {
+
+      // connect to server
+      const socket = io(window.location.href);
+
+      // when a message is emitted from the server display in the chat window
+      socket.on('server:message', function(data) {
+        $('#messages').append(
+          '<li style="color: red">' +
+          data.message + ' - ' + 'received' + ' ' + new Date() +
+          '</li>'
+        );
+      });     
+      
+      // handle form's "submit" event
+      $('#message-form').on('submit', function(event) {
+
+        event.preventDefault();
+
+        const message = $('#message').val();
+
+        // send message from client
+        if (message) {
+          socket.emit('client:message', { message: message });
+        }
+
+        // display message in the UI
+        $('#messages').append(
+          '<li style="color: green">' +
+          message + ' - ' + 'sent' + ' ' + new Date() +
+          '</li>'
+        );
+      });
+    });
+  </script>
+</body>
+</html>
