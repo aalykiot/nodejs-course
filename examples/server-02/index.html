@@ -4,9 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Node.js</title>
+  <title>Socket Example</title>
 </head>
 <body>
-  <h1>This is an html page 🚀</h1>
+  <div id="app">
+    <h1>Beacon 🚨</h1>
+    <h2 v-for="message in messages">Ping {{message}}</h2>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script>
+    // connect to server
+    const socket = io(window.location.href);
+    // vue.js
+    new Vue({
+      el: '#app',
+      data: {
+        messages: [],
+      },
+      created() {
+        socket.on('new_message', (data) => {
+          this.messages.push(data);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
