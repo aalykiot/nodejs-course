@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-// Local imports
+// local imports
 const logger = require('../util/logger');
 
-// Constants
+// constants
 const URI = process.env.MONGO_URI;
 
 mongoose.connect(URI, {

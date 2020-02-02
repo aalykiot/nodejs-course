@@ -1,12 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cors = require('cors');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const bodyParser = require('body-parser');
 
-// Load .env variables
-dotenv.config();
-
-// Local imports
+// local imports
 const CustomError = require('./helpers/error');
 
 require('./config/connection');
@@ -16,15 +15,23 @@ const bookRoutes = require('./routes/bookRoutes');
 
 const app = express();
 
-// Express middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+// middleware
+app.use(cors());
 app.use(morgan('dev'));
+app.use(helmet());
+app.use(limiter);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// API routes as middleware
+// handle /api route
 app.use('/api', bookRoutes);
 
-// Express index route
+// index
 app.get('/', (req, res) => {
   res.send('Express server running!');
 });
@@ -34,7 +41,7 @@ app.use((req, res, next) => {
   next(new CustomError(404, 'API route not found'));
 });
 
-// Error handler
+// error handler
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500);
   res.send({
@@ -46,5 +53,4 @@ app.use((err, req, res, next) => {
   next();
 });
 
-// Exporting server object
 module.exports = app;

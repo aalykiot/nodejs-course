@@ -1,6 +1,9 @@
 const http = require('http');
+const dotenv = require('dotenv');
 
-// Local imports
+// load .env file
+dotenv.config();
+
 const app = require('../src/app');
 const logger = require('../src/util/logger');
 
