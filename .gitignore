@@ -108,3 +108,6 @@ dist
 
 # Database storage folder
 db_data
+
+# Big text file
+big.file
