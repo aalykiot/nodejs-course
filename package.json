@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/alexalikiotis/nodejs-course#readme",
   "dependencies": {
-    "reveal-md": "^3.4.2"
+    "reveal-md": "^5.4.0"
   }
 }
